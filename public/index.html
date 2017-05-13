@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en" ng-app="adminApp">
+  <head>
+    <base href="/">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>sneakysmart</title>
+    <!--link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/static.css"-->
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+		  <link href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.1/angular-material.css" rel="stylesheet">
+      <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+			<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+        <!-- SPELLS -->
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.js"></script><!-- load angular -->
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular-route.js"></script><!-- load angular routes-->
+
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>	
+	<script src="http://angular-data-grid.github.io/dist/pagination.js"></script>
+	<script src="http://angular-data-grid.github.io/dist/dataGrid.js"></script>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.1/angular-material.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.14.0/ui-bootstrap-tpls.js"></script><!--load ui bootstrap -->
+
+       <script src="js/controllers/AdminCtrl.js"></script> <!-- load up our controller -->
+        <script src="js/controllers/EditCtrl.js"></script> <!-- load up our controller -->
+	<script src="js/services/todos.js"></script> <!-- load our todo service -->
+	<script src="js/adminCore.js"></script> <!-- load our main application -->
+ </head>
+<body  >
+
+
+    <md-toolbar class="md-hue-2">
+      <div class="md-toolbar-tools">
+        <md-button class="md-icon-button" aria-label="Settings" ng-disabled="true">
+						<md-icon class="material-icons">menu</md-icon>
+        </md-button>
+
+        <h2 flex md-truncate>sneakysmart admin</h2>
+
+        <md-button class="md-icon-button" aria-label="Favorite">
+						<md-icon class="material-icons">favorite</md-icon>
+        </md-button>
+
+        <md-button class="md-icon-button" aria-label="More">
+						<md-icon class="material-icons">more_vert</md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+
+
+
+
+    <section id="admin" class="container">
+<div ng-view></div>
+</section>
+
+
+</body>
+</html>

@@ -1,0 +1,66 @@
+
+<style>
+  .CodeMirror {
+        float: left;
+        width: 100%;
+				height: 95%;
+        border: 0px ;
+      }
+      iframe {
+        width: 100%;
+        
+        height: 400px;
+		background-color:#F0F0F0;
+		border:none;
+		border-radius:4px;
+      }
+</style>
+
+  <div ng-cloak="" class="tabsdemoDynamicHeight" >
+  <md-content >
+    <md-tabs md-dynamic-height="" md-border-bottom="">
+      <md-tab label="index.js">
+        <md-card style="height:100%; width:100%; margin:0;">
+    
+              <div class="control-group">
+                  <label class="control-label" for="textarea2"></label>
+										  <textarea ui-codemirror="cmOption" ng-model="theHtml" ></textarea>
+
+               </div>
+								<md-card-actions layout="row" layout-align="end center">					
+          					<md-button  class="md-primary md-raised" ng-click="updateAsset()">update</md-button>
+							</md-card-actions>
+              </md-card>
+      </md-tab>
+      
+      <md-tab label="css">
+        <md-content class="md-padding">
+          <h1 class="md-display-2">CSS</h1>
+    
+              <div class="control-group">
+                  <label class="control-label" for="textarea3">CSS</label>
+                  <div class="controls">
+										  <textarea ui-codemirror="cmOption" ng-model="theCss" style="width: 810px; height: 200px"></textarea>
+                      .bg { background: red; }
+                    </textarea>
+                  </div>
+               </div>
+        </md-content>
+      </md-tab>
+      
+      <md-tab label="Preview">
+        <md-content class="md-padding">
+          <div id="result"></div>
+					<!--iframe id="preview" ng-src="{{pagePath}}"></span-->
+					
+					<iframe id="preview"  ng-src="{{pagePath}}" />
+
+          <!--iframe id="preview"></iframe-->
+        </md-content>
+      </md-tab>
+    </md-tabs>
+  </md-content>
+</div>
+
+   
+

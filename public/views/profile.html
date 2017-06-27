@@ -1,0 +1,258 @@
+<div layout="column"  flex>
+
+  <!--section layout="row" flex=""-->
+
+	<style>
+	.layout-column > .flex {
+    min-height: 100%;
+	}
+	</style>
+
+		<!-- ANGULAR MATERIAL SIDENAV LEFT -->
+  <md-sidenav md-component-id="left" class="md-sidenav-left" >
+      <md-toolbar style=" background:#1E8BC3;">
+        <h1 class="md-toolbar-tools"></h1>
+      </md-toolbar>
+     <md-content>
+      <md-list flex>
+        <!--md-subheader class="md-no-sticky">3 line item (with hover)</md-subheader-->
+        <md-list-item class="md-2-line" ng-click="goHome()" >
+					<i class="material-icons md-avatar" >home</i>
+          <div class="md-list-item-text" layout="column"><h3>Home</h3></div>
+        </md-list-item>
+			<md-divider ></md-divider>
+        <md-list-item class="md-2-line" ng-click="goPage()">
+					<i class="material-icons md-avatar" >assignment</i>
+          <div class="md-list-item-text" layout="column"><h3>View page</h3></div>
+        </md-list-item>
+				        <md-subheader class="md-no-sticky">Edit</md-subheader>
+
+        <md-list-item class="md-2-line" ng-click="goEdit()">
+					<i class="material-icons md-avatar" >assignment</i>
+          <div class="md-list-item-text" layout="column"><h3>Edit page</h3></div>
+        </md-list-item>
+
+			 </md-list>
+		</md-content>
+  </md-sidenav>
+<!--/sidenav-->
+
+
+  <md-content style=" height:100vh">
+
+<!-- ANGULAR MATERIAL toolbar -->
+    <md-toolbar class="" style="position: fixed;  background:#1E8BC3;" >
+      <div class="md-toolbar-tools">
+				
+				
+        <md-button ng-click="openLeftMenu()" class="md-icon-button" aria-label="Settings">
+          <i class="material-icons">menu</i>
+        </md-button>
+			<h1>
+          <span>Profile</span>
+        </h1>
+
+
+			<span flex></span>
+		
+
+
+			<md-menu md-position-mode="target-right bottom" md-offset="0 10">
+	        <md-button class="md-hue-2"  ng-click="openMenu($mdOpenMenu, $event)">
+
+          <div class="valign-center ">
+					<i class="material-icons">person</i>
+					</div>				
+        </md-button>
+
+      <md-menu-content width="3">
+        <md-menu-item>
+          <md-button ng-click="goProfile()">          
+						<md-icon class="material-icons">person</md-icon>Profile
+          </md-button>
+        </md-menu-item>
+        <md-menu-divider></md-menu-divider>
+        <md-menu-item>
+          <md-button href="/logout" target="_self">
+						<md-icon class="material-icons">exit_to_app</md-icon>Logout
+          </md-button>
+        </md-menu-item>
+      </md-menu-content>
+    </md-menu>	
+			</div>
+
+			<!-- /ANGULAR MATERIAL TOOLBAR -->
+
+
+</md-toolbar>	
+
+  <md-content flex class="md-padding" style=" margin-top: 65px;  height:calc(100vh - 65px) background-color: #e9eaec;">
+
+
+
+<div class="container" >
+	<div class="row">
+		<div class="col-md-3">
+			
+			<md-card>
+			<div class="panel">
+				<div class="panel-heading">
+					  <div layout="row" flex layout-align="center center">
+							<ng-letter-avatar  height="120" width="120"  data="{{userName}}" shape="round"></ng-letter-avatar>
+					</div>
+					<hr>
+					
+ 					  <div layout="row" flex layout-align="center center">
+     <md-button class="md-raised" disabled="disabled">{{userName}}</md-button>
+					</div>
+					
+				</div>
+			</div><!--/panel--->
+			</md-card>
+	
+			<md-card>
+			<div class="panel">
+				<div class="panel-heading">
+					<h4 class=""></h4>
+					<br/>
+				</div>
+			</div><!--/panel--->
+			</md-card>
+
+				
+				</div> <!--/end 3 col width-->
+
+		<div class="col-md-8">
+			<!--default block-->
+    <form name="signupform">
+			
+			<md-card >        
+          <md-card-title>
+        		<md-card-title-text>
+            <span class="md-headline">Choose a name for your page:</span>
+						</md-card-title-text>
+					</md-card-title>
+					<md-card-content>
+				
+ 						<div layout="row">
+							  <div flex="20" hide-xs>
+          <!-- Spacer //-->
+        				</div>
+							<md-input-container style="padding-top:6px">kidmade.co/</md-input-container>
+          <md-input-container class="md-block" style="max-width: 200px" flex-gt-sm>
+            <input   nameunique required ng-readonly="isReadOnly" ng-pattern="/^[a-z0-9_]{1,25}$/" ng-minlength="3" ng-maxlength="15" ng-model="user.username" name="username" ng-model-options="{debounce : 500, allowInvalid: true}" style="font-weight:bold">
+					  <div ng-messages="signupform.username.$error" >
+            	<div ng-message-exp="['required',  'pattern']">
+              	lowercase letters, numbers, or underscores only
+            	</div>
+            	<div ng-message-exp="[ 'minlength', 'maxlength']">
+              	3-15 characters
+            	</div>
+            	<div ng-message="nameunique">
+              	name taken
+            	</div>						
+						</div>
+						<!--span ng-hide="signupform.username.$error.pattern || signupform.username.$error.maxlength" style="color:grey">(you can change this)</span-->
+           <!--span ng-show="signupform.username.$error.pattern" style="color:red">lowercase letters, numbers, or underscore, max: 15 characters</span>
+            <span ng-show="signupform.username.$error.maxlength" style="color:red">too long</span-->
+  							</md-input-container>
+							<md-input-container>
+            <md-button class="md-icon-button md-primary" aria-label="Edit" ng-click="setEditMode()"  ng-show="isReadOnly">
+								<i class="material-icons md-avatar" >edit</i>
+     				 </md-button>
+							</md-input-container>
+
+ 
+        </div>
+			
+						<!--div layout="row" ng-show="user.google.name" style="margin-top:30px;">
+						 <div flex="20" hide-xs-->
+          <!-- Spacer //-->
+        				<!--/div>
+	        <md-input-container class="md-block" >
+          <label>Google Name</label>
+          <input ng-model="user.google.name">
+        </md-input-container>
+				<md-input-container>
+            <md-button class="md-icon-button md-primary" aria-label="Edit" ng-click="setEditMode()"  ng-show="isReadOnly">
+								<i class="material-icons md-avatar" >edit</i>
+     				 </md-button>
+							</md-input-container>
+						</div-->
+						
+		 						<div layout="row" style="margin-top:30px;">
+						<div flex="20" hide-xs>
+          <!-- Spacer //-->
+        				</div>
+				<md-input-container md-no-float class="md-block">
+            <label>Confirm Email</label>
+          <input required   ng-pattern="/^.+@.+\..+$/" ng-minlength="5" ng-readonly="isReadOnly" ng-model="user.local.email" name="email" >
+					  <div ng-messages="signupform.email.$error" >
+            <div ng-message-exp="['required', 'pattern', 'minlength']">
+              Please enter a valid e-mail address.
+            </div>
+          </div>
+        </md-input-container>
+
+					<md-input-container>
+            <md-button class="md-icon-button md-primary" aria-label="Edit" ng-click="setEditMode()"  ng-show="isReadOnly">
+								<i class="material-icons md-avatar" >edit</i>
+     				 </md-button>
+							</md-input-container>	
+						</div>
+						
+		 			<div layout="row" style="margin-top:30px;">
+						<div flex="20" hide-xs>
+          <!-- Spacer //-->
+        				</div>
+
+				<md-input-container md-no-float class="md-block" ng-show="!isLoggedIn">
+            <label>Password</label>
+          <input required   ng-readonly="isReadOnly" ng-model="user.local.password" name="password" ng-minlength="5">
+					  <div ng-messages="signupform.password.$error" >
+            <div ng-message-exp="[ 'minlength']">
+              password must be at least 5 characters
+            </div>
+          </div>        </md-input-container>
+
+						</div>
+
+
+										<md-button ng-click="goEdit()"   ng-show="isReadOnly" style="background-color: #1E8BC3; color:white; padding-left: 25px; padding-right:25px" class="md-raised ">Start Coding <md-icon style="color:white; vertical-align:middle;" >arrow_forward</md-icon> </md-button>
+
+						<span flex></span>
+				<!--md-button ng-click="setEditMode()"  ng-show="isReadOnly" class="md-raised">Edit</md-button-->
+	<md-button ng-click="updateProfile()" ng-show="!isReadOnly" ng-disabled="signupform.email.$invalid || signupform.username.$invalid || (signupform.password.$invalid && !isLoggedIn)" class="md-raised md-accent">Save</md-button>
+		<md-button ng-click="cancelEditMode(signupform)" ng-show="!isReadOnly && isLoggedIn" ng-disabled="isReadOnly || (signupform.username.$invalid && !isLoggedIn)" class="md-raised">Cancel</md-button>
+		<md-button ng-click="cancelSignup()" ng-show="!isLoggedIn" ng-disabled="isReadOnly" class="md-raised">Remain a guest</md-button>
+				</md-card-content>
+			</md-card>
+
+					</form>
+			
+<style>
+			
+.label-as-badge {
+    border-radius: 1em;
+}
+}</style>
+			
+
+
+		</div> <!--/grid of 8-->
+
+
+<div class="col-md-1">
+	<!--div style="min-height: 90vh;"></div-->
+<div id="floater">
+
+	</div><!--floater?-->
+		</div><!--/col of 2-->
+
+	</div><!-- /.row -->
+
+</div><!-- /.container -->
+
+		</md-content>
+	</md-content>
+  </div>

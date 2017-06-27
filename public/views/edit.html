@@ -1,204 +1,391 @@
-<br><br><br><br><br><br>
 
-
-
-
-<div  layout="column" ng-cloak class="md-inline-form">
-
-  <md-content md-theme="docs-dark" layout-gt-sm="row" layout-padding>
-    <div>
-      <md-input-container>
-        <label>Title</label>
-        <input ng-model="user.title">
-      </md-input-container>
-
-      <md-input-container>
-        <label>Email</label>
-        <input ng-model="user.email" type="email">
-      </md-input-container>
-    </div>
-  </md-content>
-
-  <md-content layout-padding>
-    <div>
-      <form name="userForm">
-
-        <div layout-gt-xs="row">
-          <md-input-container class="md-block" flex-gt-xs>
-            <label>Company (Disabled)</label>
-            <input ng-model="user.company" disabled>
-          </md-input-container>
-
-          <md-input-container>
-            <label>Enter date</label>
-            <md-datepicker ng-model="user.submissionDate"></md-datepicker>
-          </md-input-container>
-        </div>
-
-        <div layout-gt-sm="row">
-          <md-input-container class="md-block" flex-gt-sm>
-            <label>First name</label>
-            <input ng-model="user.firstName">
-          </md-input-container>
-
-          <md-input-container class="md-block" flex-gt-sm>
-            <label>Long Last Name That Will Be Truncated And 3 Dots (Ellipsis) Will Appear At The End</label>
-            <input ng-model="theMax">
-          </md-input-container>
-        </div>
-
-        <md-input-container class="md-block">
-          <label>Address</label>
-          <input ng-model="user.address">
-        </md-input-container>
-
-        <md-input-container md-no-float class="md-block">
-          <input ng-model="user.address2" placeholder="Address 2">
-        </md-input-container>
-
-        <div layout-gt-sm="row">
-          <md-input-container class="md-block" flex-gt-sm>
-            <label>City</label>
-            <input ng-model="user.city">
-          </md-input-container>
-
-          <md-input-container class="md-block" flex-gt-sm>
-            <label>State</label>
-            <md-select ng-model="user.state">
-              <md-option ng-repeat="state in states" value="{{state.abbrev}}">
-                {{state.abbrev}}
-              </md-option>
-            </md-select>
-          </md-input-container>
-
-          <md-input-container class="md-block" flex-gt-sm>
-            <label>Postal Code</label>
-            <input name="postalCode" ng-model="user.postalCode" placeholder="12345"
-                   required ng-pattern="/^[0-9]{5}$/" md-maxlength="5">
-
-            <div ng-messages="userForm.postalCode.$error" role="alert" multiple>
-              <div ng-message="required" class="my-message">You must supply a postal code.</div>
-              <div ng-message="pattern" class="my-message">That doesn't look like a valid postal
-                code.
-              </div>
-              <div ng-message="md-maxlength" class="my-message">
-                Don't use the long version silly...we don't need to be that specific...
-              </div>
-            </div>
-          </md-input-container>
-        </div>
-
-        <md-input-container class="md-block">
-          <label>Biography</label>
-          <textarea ng-model="user.biography" md-maxlength="150" rows="5" md-select-on-focus></textarea>
-        </md-input-container>
-
-      </form>
-    </div>
-  </md-content>
-
-</div>
-
-
-
-
-
-
-
-
-<div class="view">
-<div class="container">
-<div class="row">
-<a class= "btn btn-lg btn-warning" href= "/admin/"><i class="fa fa-left-arrow"></i> Back </a>
-<a class="btn btn-lg btn-success" href="/admin/edit/0"><i class="fa fa-plus"></i>&nbsp;Add </a>
-<a data-ng-show="lessonRecord._id" class= "navbar-brand pull-right">Number: {{ lessonRecord._id }} </a>
-</div>
-<h3>{{ title }}</h3>
-</header>
-<div class="col-md-12 md-inline-form">
-
+<style>
+  .CodeMirror {
+        float: left;
+				height: 100%;
+        border: 0px ;
+      }
+      iframe {
+        width: 100%; height:100%;
+        
+        /*height: 400px;*/
+		background-color:#F0F0F0;
+		border:none;
+		border-radius:4px;
+      }
   
-<form role="form" name="myForm" class="form-horizontal">
-<div class="row">
+  [role="tabpanel"] {
+  transition: none;
+}
+
+  md-tab-data{
+  opacity: 1;
+  display: table;
+  right: 0;
+  left: initial;
+  z-index: 20;
+}
+  
+	
+	section {
+    box-sizing: border-box;
+    padding-top: 0;
+		min-width: 450px;
+    border: $spacing/2 solid #fff;
+		
+    &.resizable {
+        flex: 0 0 300px;
+    }
+}
+	md-tab-content {
+overflow: hidden;
+	}
+	
+	
+	
+</style>
+
+<div layout="column" style="">
+
+		<!-- ANGULAR MATERIAL SIDENAV LEFT -->
+  <md-sidenav md-component-id="left" class="md-sidenav-left" >
+      <md-toolbar style="background:#1E8BC3;">
+        <h1 class="md-toolbar-tools"></h1>
+      </md-toolbar>
+     <md-content>
+      <md-list flex>
+        <!--md-subheader class="md-no-sticky">3 line item (with hover)</md-subheader-->
+        <md-list-item class="md-2-line" ng-click="goHome()" >
+					<i class="material-icons md-avatar" >home</i>
+          <div class="md-list-item-text" layout="column"><h3>Home</h3></div>
+        </md-list-item>
+			<md-divider ></md-divider>
+        <md-list-item class="md-2-line" ng-click="goPage()">
+					<i class="material-icons md-avatar" >assignment</i>
+          <div class="md-list-item-text" layout="column"><h3>View page</h3></div>
+        </md-list-item>
+				        <md-subheader class="md-no-sticky">Edit</md-subheader>
+
+        <md-list-item class="md-2-line" ng-click="goEdit()">
+					<i class="material-icons md-avatar" >assignment</i>
+          <div class="md-list-item-text" layout="column"><h3>Edit page</h3></div>
+        </md-list-item>
+
+			 </md-list>
+		</md-content>
+  </md-sidenav>
+<!--/sidenav-->
 
 
+  <md-content style=" height:100vh">
 
-<div class= "form-group" >
-<label class= "col-md-2"> subject</label>
-<div class="col-md-4">
-<input name="subject" data-ng-model="lessonRecord.subject" type= "text" class= "form-control" placeholder="Science" />
-</div>
-</div>
+<!-- ANGULAR MATERIAL toolbar -->
+    <md-toolbar class="" style="position: fixed; background:#1E8BC3; color:#fff" >
+      <div class="md-toolbar-tools">
+				
+				
+        <md-button ng-click="openLeftMenu()" class="md-icon-button" aria-label="Settings">
+          <i class="material-icons">menu</i>
+        </md-button>
+			<h1>
+          <span>kidmade - {{pageId}}</span>
+        </h1>
 
-<div class= "form-group">
-<label class= "col-md-2"> unitname </label>
-<div class="col-md-4">
-<input name="unitname" data-ng-model="lessonRecord.unitname" type= "text" class= "form-control" placeholder="Angles" />
-</div>
-</div>
-<div class= "form-group">
-<label class= "col-md-2"> dayofyear </label>
-<div class="col-md-4">
-<input name="dayofyear" data-ng-model="lessonRecord.dayofyear" type= "text" class= "form-control" placeholder="124" />
-</div>
-</div>
-<div class= "form-group">
-<label class= "col-md-2"> sequence </label>
-<div class="col-md-4">
-<input name="sequence" data-ng-model="lessonRecord.sequence" type= "text" class= "form-control" placeholder="1" />
-</div>
-</div>
-<div class= "form-group">
-<label class= "col-md-2">tweet body </label>
-<div class="col-md-4">
-<textarea data-ng-model="lessonRecord.body" type="textarea" class="form-control" rows="6" placeholder= "An obtuse angle is..."></textarea>
-<!--textarea ng-model="lessonRecord.body" md-maxlength="140" rows="5" placeholder= "An obtuse angle is..." md-select-on-focus></textarea-->
-  </div>
-</div>
-  <md-content layout-padding>
 
-        <md-input-container class="md-block">
-          <label>Biography</label>
-          <textarea ng-model="lessonRecord.body" md-maxlength="150" rows="5" md-select-on-focus></textarea>
-        </md-input-container>
+			<span flex></span>
+		
+
+
+			<md-menu md-position-mode="target-right bottom" md-offset="0 10">
+	        <md-button class="md-hue-2"  ng-click="openMenu($mdOpenMenu, $event)">
+						<md-icon class="material-icons">person</md-icon>
+        </md-button>
+
+      <md-menu-content width="3">
+        <md-menu-item ng-show="!user.local">
+          <md-button ng-click="goProfile()">          
+						<md-icon class="material-icons">person</md-icon>Sign up
+          </md-button>
+        </md-menu-item>
+        <md-menu-item ng-show="user.local">
+          <md-button ng-click="goProfile()">          
+						<md-icon class="material-icons">person</md-icon>Profile
+          </md-button>
+        </md-menu-item>
+				<md-menu-divider></md-menu-divider>
+        <md-menu-item ng-show="!user.local">
+          <md-button href="/logout" target="_self">
+						<md-icon class="material-icons">exit_to_app</md-icon>Exit demo
+          </md-button>
+        </md-menu-item>
+        <md-menu-item ng-show="user.local">
+          <md-button href="/logout" target="_self">
+						<md-icon class="material-icons">exit_to_app</md-icon>Logout
+          </md-button>
+        </md-menu-item>
+				</md-menu-content>
+
+				</md-menu>	
+			</div>
+
+			<!-- /ANGULAR MATERIAL TOOLBAR -->
+</md-toolbar>	
+
+  <md-content style=" margin-top: 65px;  height:calc(100vh - 65px)">
+
+		<div layout-gt-sm="row" layout="column" style="height:100%">
+			<section id="one" resizable r-directions="['right']" style="height:100%" >
+
+				
+									
+
+
+				
+    <md-tabs md-stretch-tabs="auto"  md-border-bottom md-selected="selectedTabIndex" style=" width:100%;  min-height:100% !important;">
+			<!--md-menu md-position-mode="target-right bottom" md-offset="0 10">
+	        <md-button class="md-hue-2"  ng-click="openMenu($mdOpenMenu, $event)">
+
+          <div class="valign-center ">
+					<i class="material-icons">add</i>
+					</div>				
+        </md-button>
+      <md-menu-content width="3">
+        <md-menu-item>
+          <md-button type="file" ngf-select="uploadFiles($file, $invalidFiles)"
+          accept="image/*" ngf-max-height="1000" ngf-max-size="1MB"  name="test">          
+						<md-icon class="material-icons">photo</md-icon>Image
+          </md-button>
+        </md-menu-item>
+        <md-menu-divider></md-menu-divider>
+        <md-menu-item>
+          <md-button href="/logout" target="_self"  disabled="disabled">
+						<md-icon class="material-icons">insert_drive_file</md-icon>Page
+          </md-button>
+        </md-menu-item>
+        <md-menu-item>
+          <md-button href="/logout" target="_self"  disabled="disabled">
+						<md-icon class="material-icons">code</md-icon>Library
+          </md-button>
+        </md-menu-item>
+				</md-menu-content>
+    </md-menu>	
+            <md-button class="md-primary md-raised" ng-click="updateHtml()">Save</md-button-->
+
+			
+		
+		
+			    <md-tab label="index.html" style="height: 100%" ng-click="changeTab(0)">
+						
+			<md-fab-speed-dial md-direction="up" class="md-scale md-fab-bottom-right">
+				<md-fab-trigger>
+					<!--md-button aria-label="menu" class="md-fab md-warn" ng-click="showAssignment($event)"-->
+					<md-button aria-label="menu" class="md-fab md-warn"  ng-click="updateHtml($event)" >
+						<md-icon class="material-icons wi">save</md-icon>
+					</md-button>
+				</md-fab-trigger>
+			</md-fab-speed-dial>							
+						
+        <md-card style=" margin:0;height:100% ">
+    
+                  <label class="control-label" for="textarea2"></label>
+										  <textarea ui-codemirror="cmOption" ng-model="theHtml" style="height: 100%;"></textarea>
+
+								<!--md-card-actions layout="row" layout-align="end center">					
+          					<md-button  class="md-primary md-raised" ng-click="updateHtml()">update</md-button>
+							</md-card-actions-->
+              </md-card>
+      </md-tab>
+      
+      <md-tab label="style.css" ng-click="changeTab(1)">
+				
+			<md-fab-speed-dial md-direction="up" class="md-scale md-fab-bottom-right">
+				<md-fab-trigger>
+					<!--md-button aria-label="menu" class="md-fab md-warn" ng-click="showAssignment($event)"-->
+					<md-button aria-label="menu" class="md-fab md-warn"  ng-click="updateHtml()" >
+						<md-icon class="material-icons wi">save</md-icon>
+					</md-button>
+				</md-fab-trigger>
+			</md-fab-speed-dial>					
+				
+        <md-card style="height:100%; width:100%; margin:0;">
+    
+                  <label class="control-label" for="textarea2"></label>
+										  <textarea ui-codemirror="cmOption_css" ng-model="theCss" ></textarea>
+
+
+              </md-card>
+      </md-tab>
+ 
+			
+			
+		<md-tab ng-click="changeMoreTab(0)">
+            <md-menu md-position-mode="target-right bottom" md-offset="0 10">
+                <div ng-click="$mdOpenMenu($event)">
+                    <span>More</span>
+										<md-icon md-menu-align-target class="material-icons wi">keyboard_arrow_down</md-icon>
+                </div>
+                <md-menu-content>
+                    <md-menu-item>
+                        <md-button ng-click="changeMoreTab(0)">
+										<md-icon md-menu-align-target class="material-icons wi">photo</md-icon>
+                            Images
+                        </md-button>
+                    </md-menu-item>
+                    <md-menu-item>
+                        <md-button ng-click="changeMoreTab(1)">
+										<md-icon md-menu-align-target class="material-icons wi">extension</md-icon>
+                            Templates
+                        </md-button>
+                    </md-menu-item>
+                    <md-menu-item>
+                        <md-button disabled="disabled" >
+														<md-icon md-menu-align-target class="material-icons wi">library_add</md-icon>
+                            Add pages
+                        </md-button>
+                    </md-menu-item>
+                    <md-menu-item>
+                        <md-button disabled="disabled" >
+														<md-icon md-menu-align-target class="material-icons wi">code</md-icon>
+                            Add Library
+                        </md-button>
+                    </md-menu-item>
+									        <md-menu-divider></md-menu-divider>
+									 <md-menu-item>
+                        <md-button ng-click="changeMoreTab(4)">
+														<md-icon md-menu-align-target class="material-icons wi">help</md-icon>
+                            Help
+                        </md-button>
+                    </md-menu-item>
+                </md-menu-content>
+            </md-menu>
+						<md-tab-body>
+
+							
+
+        <md-card style="height:100%; width:100%; margin:0;overflow:scroll;">
+    
+        <ng-switch on="selectedMoreTabIndex">
+      <div ng-switch-when="0">
+				
+
+								      <md-list flex>
+        <md-subheader class="md-no-sticky">Upload up to 5 images</md-subheader>
+        <md-list-item class="md-1-line" ng-repeat="tab in imageList" ng-click="null">
+          <img ng-src="./../pages/{{pageId}}/{{tab.name}}" class="md-avatar" alt="{{tab.name}}" />
+          <div class="md-list-item-text" layout="column">
+            <h3>{{ tab.name }}</h3>
+          </div>
+				<md-button class="md-secondary md-icon-button" ng-click="removeTab(tab.name)"  aria-label="delete">
+					<i class="material-icons" >delete</i>
+          </md-button>
+        </md-list-item>
+				</md-list>
+								
+											
+								<md-card-actions layout="row" layout-align="end center">					
+									  <md-button type="file" ngf-select="uploadFiles($file, $invalidFiles)"
+          						accept="image/*" ngf-max-height="1000" ngf-max-size="1MB"  name="test">          
+											<md-icon class="material-icons">add</md-icon>
+          						</md-button>
+							</md-card-actions>
+					</div>
+					
+					<div ng-switch-when="1">
+
+					
+			<md-list>		
+  <md-subheader class="md-no-sticky">Choose a template</md-subheader>
+  <md-list-item ng-repeat="template in templates">
+    <p> {{ template.name }} </p>
+    <md-checkbox class="md-secondary" ng-model="template.wanted" disabled></md-checkbox>
+    <md-button class="md-secondary" ng-click="showConfirm(template.name, $event)">More</md-button>
+
+  </md-list-item>					
+					
+					</md-list>
+						
+						
+					</div>
+					<div ng-switch-when="4">
+
+						
+
+						
+  <md-content>
+								      <md-list flex>
+        <md-subheader class="md-no-sticky">HTML Hints</md-subheader>
+												<md-list-item class="md-3-line" ng-repeat="item in htmlHints">
+        <div class="md-list-item-text" >
+          <h3>{{item.what}}</h3>
+          <h4>{{item.who}}</h4>
+          <p>{{item.notes}}</p>
+        </div>
+        <md-button class="md-secondary" ngclipboard data-clipboard-text="{{item.notes}}">	<md-icon class="material-icons">content_copy</md-icon></md-button>
+        <md-divider ng-if="!$last"></md-divider>
+      </md-list-item>
+    </md-list>
   </md-content>
 
-<div class= "form-group">
-<label class= "col-md-2">tweet source </label>
-<div class="col-md-4">
-<input name="bodysrc" data-ng-model="lessonRecord.bodysrc" type= "text" class= "form-control" placeholder="https://wikipedia.com/" />
-</div>
-</div>
 
 
+  <md-content>
+								      <md-list flex>
+        <md-subheader class="md-no-sticky">CSS Hints</md-subheader>
+												<md-list-item class="md-3-line" ng-repeat="item in cssHints">
+        <div class="md-list-item-text">
+          <h3>{{item.what}}</h3>
+          <h4>{{item.who}}</h4>
+          <p>{{item.notes}}</p>
+        </div>
+        <md-button class="md-secondary"><md-icon class="material-icons">content_copy</md-icon></md-button>
+        <md-divider ng-if="!$last"></md-divider>
+      </md-list-item>
+    </md-list>
+  </md-content>
 
-<div class= "form-group">
-<label class= "col-md-2">image </label>
-<div class="col-md-4">
-<input data-ng-model="lessonRecord.img" type="text" class= "form-control" placeholder= "https://wikipedia.com"/>
-</div>
-</div>
+						
+						
+						
+					</ng-switch>
+							
+							</md-card>
+			</md-tab-body>
+        </md-tab>	
+			
+			
+			
+    </md-tabs>	
+				
+				
+			</section>
+			
+  		<section flex >
+				
+				<md-fab-speed-dial md-direction="up" class="md-scale md-fab-bottom-right" ng-show="user.local">
+			<md-fab-trigger>
+				<!--md-button aria-label="menu" class="md-fab md-warn" ng-click="showAssignment($event)"-->
+					<md-button aria-label="menu" class="md-fab md-warn"  ng-click="goPage()" target="_blank" >
+						<i class="material-icons wi">open_in_new</i>
+					</md-button>
+			</md-fab-trigger>
+			</md-fab-speed-dial>	
 
-<div class= "form-group">
-<label class= "col-md-2">imgsrc </label>
-<div class="col-md-4">
-<input data-ng-model="lessonRecord.imgsrc"  type="text" class="form-control" placeholder="https://wikipedia.com"/>
-</div>
-</div>
+    <md-tabs md-stretch-tabs="auto"  md-border-bottom style=" width:100%;  min-height:100% !important; overflow: hidden !important;">
+				<md-tab label="preview" style="height:100%; ">
+      	<md-card  style="height:100%">
+        <md-content class="" style="margin:0; height:100%; ">
+          <div id="result"></div>
+					<iframe id="preview"  ng-src="{{pagePath}}" style=""/>
+        </md-content>
+      </md-card>
+				 </md-tab>
+		</md-tabs>
 
+			</section>
+		</div>
+  </md-content>
+	</md-content>
 
+</div>
+   
 
-<div class= "form-group">
-<label class= "col-md-2"></label>
-<div class="col-md-4">
-<a href="/admin/" class="btn">Cancel</a>
-<button data-ng-click="saveLesson(lessonRecord);" ng-disabled="isClean()"
-class="btn btn-primary">{{buttonText}}</button>
-<button data-ng-click="deleteLesson(lessonRecord)" data-ng-show="lessonRecord._id" class="btn btn-warning">Delete</button>
-</div>
-</div>
-</div>
-</form>
-</div></div>
-</div>
-</div>

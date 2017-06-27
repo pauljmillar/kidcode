@@ -2,8 +2,11 @@ var mongoose = require('mongoose');
 
 // Create a new schema for our address data
 var schema = new mongoose.Schema({
-    userid        :  String
+    username        :  String
+  , userid          : {type: mongoose.Schema.Types.ObjectId, ref: 'User'}  
   , html          : String
+  , css          : String
+  , images      : []
   , lastmodified      : Date
 });
 
